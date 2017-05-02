@@ -1,21 +1,23 @@
 $(document).ready(function(){
+  var options = {};
+  options[0] = "1: Chickens";
+  options[1] = "6: Cows";
+  options[2] = "5: Sheep";
+  options[3] = "4: Ducks";
+  options[4] = "3: Fish";
+  options[5] = "2: Pigs";
+
   var spinner = new Spinner({
     targetElement: "img",
-    segments:      6
+    segments:      6,
+    options:       options
   })
 })
 
 var Spinner = function(args) {
-  this.targetElement = args.targetElement;
+  this.targetElement = args.targetElement || "img";
   this.segments      = args.segments || 6;
-  this.options       = {};
-
-  this.options[0] = "1: Chickens";
-  this.options[1] = "6: Cows";
-  this.options[2] = "5: Sheep";
-  this.options[3] = "4: Ducks";
-  this.options[4] = "3: Fish";
-  this.options[5] = "2: Pigs";
+  this.options       = args.options  || {};
 
   this.initializeSpinner();
 }
@@ -24,14 +26,10 @@ Spinner.prototype.initializeSpinner = function() {
   var MAX_ROTATIONS  = 50;
   var spinner = this;
   var degreesPerSegment = 360/spinner.segments;
-  var totalRotation = 0;
-  var turns = 0;
-  var place = 0;
 
   $(spinner.targetElement).on("click", function(e) {
-
-    turns = Math.floor(Math.random() * (MAX_ROTATIONS));
-    totalRotation = degreesPerSegment * turns;
+    var turns = Math.floor(Math.random() * (MAX_ROTATIONS));
+    var totalRotation = degreesPerSegment * turns;
     individualSegment = turns % spinner.segments;
 
     console.log(spinner.options[individualSegment])
